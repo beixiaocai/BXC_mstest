@@ -73,6 +73,13 @@ void AvPullStream::start(int seq, const char* input, const char* rtsp_transport)
     //AVCodec* pCodec = avcodec_find_decoder_by_name("h264");
     //AVCodec* pCodec = avcodec_find_decoder_by_name("h264_cuvid");
 
+    pCodecCtx = avcodec_alloc_context3(pCodec);
+    if (0 != avcodec_parameters_to_context(pCodecCtx, pStream->codecpar)) {
+        LOGW("avcodec_parameters_to_context error");
+        return;
+    }
+
+
     if (pCodec == nullptr)
     {
         LOGW("avcodec_find_decoder error");
